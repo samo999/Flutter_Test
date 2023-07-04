@@ -1,45 +1,37 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test_yes/colors.dart';
 
 class GridViewWidget extends StatelessWidget {
   const GridViewWidget({
     Key? key,
-    required this.ItemlistImages,
-    required this.ItemlistNames,
+    required this.products,
   }) : super(key: key);
-
-  final List ItemlistImages;
-  final List ItemlistNames;
-
+  final List products;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-
-        //crossAxisSpacing: 3,
-        //mainAxisSpacing: 3
-      ),
+          crossAxisCount: 3, crossAxisSpacing: 3, mainAxisSpacing: 3),
       //padding: EdgeInsets.all(5),
       shrinkWrap: true,
-      itemCount: ItemlistImages.length,
+      itemCount: products.length,
       itemBuilder: (context, index) {
-        return Container(
-          width: 188,
-          height: 233,
+        return Padding(
+          padding: const EdgeInsets.only(top: 2.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Stack(
+                alignment: Alignment.topLeft,
+                //alignment: AlignmentDirectional.topStart,
                 children: [
                   Container(
-                    width: 120,
-                    height: 120,
+                    width: 130.w,
+                    height: 101.h,
                     decoration: BoxDecoration(
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           offset: Offset(0, 0),
                           blurRadius: 2,
@@ -48,43 +40,59 @@ class GridViewWidget extends StatelessWidget {
                       ],
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: AssetImage(ItemlistImages[index]),
+                          image: AssetImage(products[index].image),
                           fit: BoxFit.cover),
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.center,
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        color: color1,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: color1)),
-                    child: Text(
-                      "350",
-                      style: TextStyle(
-                          fontSize: 16, color: color5, fontFamily: 'Bold'),
+                  /*products[index].distance.isUndefinedOrNull
+                      ? Container()
+                      :*/
+                  Positioned(
+                    top: 10,
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          color: color1,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: color1)),
+                      child: Text(
+                        products[index].price,
+                        style: TextStyle(
+                            fontSize: 10, color: color5, fontFamily: 'Bold'),
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
               SizedBox(
-                height: 2,
+                height: 1.h,
               ),
               Container(
-                width: 30,
-                height: 4,
-                color: color6,
-              ),
-              Container(
-                width: 180,
+                  width: 30,
+                  height: 5,
+                  decoration: BoxDecoration(
+                      color: color6,
+                      borderRadius: BorderRadius.all(Radius.circular(20)))),
+              /* Container(
+                width: 180.w,
+                height: 30.h,
                 alignment: Alignment.topCenter,
                 child: Text(
-                  ItemlistNames[index],
+                products[index].name,
                   style: TextStyle(
                       fontSize: 16, color: color5, fontFamily: 'Bold'),
                 ),
-              )
+              )*/
+              Text(
+                products[index].name,
+                style: const TextStyle(
+                    fontSize: 16,
+                    color: color5,
+                    fontFamily: "SourceSansPro-Bold",
+                    fontWeight: FontWeight.bold),
+              ),
             ],
           ),
         );
